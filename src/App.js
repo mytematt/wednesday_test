@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ToDoForm from './ToDoForm'
+import List from './List'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class App extends Component {
+  
+  state = {todos: []}
+  
+  addItem = (name) => {
+    const { todos } = this.state
+    const newkey = {id: Math.random(), name }
+    this.setState({ todos: [...todos, newkey] })
+  }
+  
   render() {
+    
+    const { todos } = this.state
+    
     return (
+      <Router>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+       {/* <Link to >About Page</Link> */}
+        <ul>
+          <ToDoForm addItem={this.addItem} />
+          <List 
+            name="To Do List"
+            items={todos}
+          />
+        </ul>      
       </div>
+      </Router>
     );
   }
 }
